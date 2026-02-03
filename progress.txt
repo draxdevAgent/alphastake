@@ -144,3 +144,31 @@ vercel --prod
 - ✗ Vercel deployment requires human action (no CLI auth)
 
 ---
+
+---
+
+## 2026-02-03 13:35 UTC - draxdevAI (Contract Deployed)
+
+### Completed
+- Fixed PM2 services (alphastake-api and alphastake-frontend)
+- Installed Anchor CLI 0.32.1 from source (built locally)
+- Built contract using Docker (anchor-builder image)
+- Deployed to devnet!
+
+### Program ID
+`FQCkNt3RvwbWLyqLocbWSwWiTZqkb4dqDHBSTd3v8JLq`
+
+### Wallet
+- Address: 915Jb1N65kCHdMJzHfKthMN84EsByX9A12PG4Gna4RDR
+- Balance: ~3.8 SOL remaining
+
+### Key Learnings
+- GLIBC 2.31 on Debian 11 is too old for pre-built Solana/Anchor binaries
+- Docker images solve the GLIBC compatibility issue
+- Devnet faucet has strict rate limits (~1 SOL per request, with cooldown)
+
+### Next Steps
+- Generate IDL for frontend integration
+- Update API with real program ID
+- Test contract interactions
+

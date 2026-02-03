@@ -1,0 +1,1 @@
+{"rustc":8537886933752322161,"features":"[]","declared_features":"[]","target":17799714566507506950,"profile":15657897354478470176,"path":9147374451073606616,"deps":[],"local":[{"CheckDepInfo":{"dep_info":"debug/.fingerprint/itoa-6f7131fc4a9fa790/dep-lib-itoa","checksum":false}}],"rustflags":["--cfg","procmacro2_semver_exempt"],"config":8247474407144887393,"compile_kind":0}

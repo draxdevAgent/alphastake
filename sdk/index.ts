@@ -11,7 +11,7 @@ import * as anchor from '@coral-xyz/anchor';
 import { BN } from 'bn.js';
 
 // Program ID (will be updated after deployment)
-export const PROGRAM_ID = new PublicKey('ALPHA1111111111111111111111111111111111111111');
+export const PROGRAM_ID = new PublicKey('FQCkNt3RvwbWLyqLocbWSwWiTZqkb4dqDHBSTd3v8JLq');
 
 export type SignalDirection = 'long' | 'short';
 export type SignalStatus = 'active' | 'resolved' | 'cancelled';

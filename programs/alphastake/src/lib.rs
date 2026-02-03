@@ -52,6 +52,10 @@ pub mod alphastake {
         require!(ctx.accounts.stake_amount.lamports() >= MIN_STAKE, AlphaError::InsufficientStake);
 
         let clock = Clock::get()?;
+        // Get keys before mutable borrows
+        let signal_key = ctx.accounts.signal.key();
+        let provider_key = ctx.accounts.provider.key();
+        
         let signal = &mut ctx.accounts.signal;
         let provider = &mut ctx.accounts.provider;
         let config = &mut ctx.accounts.config;
@@ -70,7 +74,7 @@ pub mod alphastake {
             stake_amount,
         )?;
 
-        signal.provider = ctx.accounts.provider.key();
+        signal.provider = provider_key;
         signal.token_mint = token_mint;
         signal.direction = direction;
         signal.entry_price = 0; // Will be set by oracle/resolver
@@ -80,7 +84,8 @@ pub mod alphastake {
         signal.confidence = confidence;
         signal.reasoning = reasoning;
         signal.created_at = clock.unix_timestamp;
-        signal.expires_at = clock.unix_timestamp + (timeframe_hours as i64 * 3600);
+        let expires_at = clock.unix_timestamp + (timeframe_hours as i64 * 3600);
+        signal.expires_at = expires_at;
         signal.resolved_at = 0;
         signal.status = SignalStatus::Active;
         signal.outcome = SignalOutcome::Pending;
@@ -98,13 +103,13 @@ pub mod alphastake {
         config.total_volume += stake_amount;
 
         emit!(SignalCreated {
-            signal: ctx.accounts.signal.key(),
-            provider: ctx.accounts.provider.key(),
+            signal: signal_key,
+            provider: provider_key,
             token_mint,
             direction,
             target_price,
             stake_amount,
-            expires_at: signal.expires_at,
+            expires_at,
         });
 
         Ok(())
@@ -113,6 +118,10 @@ pub mod alphastake {
     /// Subscribe to a signal (pay to get notified + share in slash rewards)
     pub fn subscribe(ctx: Context<Subscribe>, amount: u64) -> Result<()> {
         require!(amount >= MIN_SUBSCRIPTION, AlphaError::InsufficientSubscription);
+        
+        // Get keys before mutable borrows
+        let signal_key = ctx.accounts.signal.key();
+        let subscriber_key = ctx.accounts.subscriber.key();
         
         let signal = &mut ctx.accounts.signal;
         require!(signal.status == SignalStatus::Active, AlphaError::SignalNotActive);
@@ -131,8 +140,8 @@ pub mod alphastake {
         )?;
 
         let subscription = &mut ctx.accounts.subscription;
-        subscription.signal = ctx.accounts.signal.key();
-        subscription.subscriber = ctx.accounts.subscriber.key();
+        subscription.signal = signal_key;
+        subscription.subscriber = subscriber_key;
         subscription.amount = amount;
         subscription.subscribed_at = Clock::get()?.unix_timestamp;
         subscription.claimed = false;
@@ -142,8 +151,8 @@ pub mod alphastake {
         signal.total_subscribed += amount;
 
         emit!(Subscribed {
-            signal: ctx.accounts.signal.key(),
-            subscriber: ctx.accounts.subscriber.key(),
+            signal: signal_key,
+            subscriber: subscriber_key,
             amount,
         });
 
@@ -224,6 +233,11 @@ pub mod alphastake {
 
     /// Claim rewards/refunds after signal resolution
     pub fn claim(ctx: Context<Claim>) -> Result<()> {
+        // Get keys before mutable borrows
+        let signal_key = ctx.accounts.signal.key();
+        let subscriber_key = ctx.accounts.subscriber.key();
+        let signal_bump = ctx.accounts.signal.bump;
+        
         let signal = &ctx.accounts.signal;
         let subscription = &mut ctx.accounts.subscription;
         let config = &ctx.accounts.config;
@@ -249,11 +263,10 @@ pub mod alphastake {
         subscription.claimed = true;
 
         // Transfer from vault to subscriber
-        let signal_key = ctx.accounts.signal.key();
         let seeds = &[
             b"vault",
             signal_key.as_ref(),
-            &[ctx.accounts.signal.bump],
+            &[signal_bump],
         ];
         let signer = &[&seeds[..]];
 
@@ -270,8 +283,8 @@ pub mod alphastake {
         )?;
 
         emit!(Claimed {
-            signal: ctx.accounts.signal.key(),
-            subscriber: ctx.accounts.subscriber.key(),
+            signal: signal_key,
+            subscriber: subscriber_key,
             amount: payout,
         });
 
@@ -280,11 +293,14 @@ pub mod alphastake {
 
     /// Provider claims their stake back if signal won
     pub fn provider_claim(ctx: Context<ProviderClaim>) -> Result<()> {
+        // Get key before mutable borrow
+        let provider_key = ctx.accounts.provider.key();
+        
         let signal = &ctx.accounts.signal;
         let provider = &mut ctx.accounts.provider;
         
         require!(signal.status == SignalStatus::Resolved, AlphaError::SignalNotResolved);
-        require!(signal.provider == ctx.accounts.provider.key(), AlphaError::NotSignalProvider);
+        require!(signal.provider == provider_key, AlphaError::NotSignalProvider);
         
         let is_win = matches!(signal.outcome, SignalOutcome::TargetHit | SignalOutcome::ExpiredProfit);
         require!(is_win, AlphaError::SignalLost);

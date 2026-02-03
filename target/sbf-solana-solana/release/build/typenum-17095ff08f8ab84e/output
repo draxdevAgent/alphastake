@@ -1,0 +1,2 @@
+cargo:rustc-env=TYPENUM_BUILD_CONSTS=/app/target/sbf-solana-solana/release/build/typenum-17095ff08f8ab84e/out/consts.rs
+cargo:rustc-env=TYPENUM_BUILD_OP=/app/target/sbf-solana-solana/release/build/typenum-17095ff08f8ab84e/out/op.rs

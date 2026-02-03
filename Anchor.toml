@@ -3,10 +3,10 @@ seeds = false
 skip-lint = false
 
 [programs.localnet]
-alphastake = "ASTkw5kMB9vQCcKJ3NRrRk4VE5cAdWSkPZPLvSdKz2vb"
+alphastake = "FQCkNt3RvwbWLyqLocbWSwWiTZqkb4dqDHBSTd3v8JLq"
 
 [programs.devnet]
-alphastake = "ASTkw5kMB9vQCcKJ3NRrRk4VE5cAdWSkPZPLvSdKz2vb"
+alphastake = "FQCkNt3RvwbWLyqLocbWSwWiTZqkb4dqDHBSTd3v8JLq"
 
 [registry]
 url = "https://api.apr.dev"

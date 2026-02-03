@@ -1,10 +1,10 @@
-FROM rust:1.80
+FROM rustlang/rust:nightly
 
-# Install Solana and Anchor
+# Install Solana CLI
 RUN sh -c "$(curl -sSfL https://release.anza.xyz/v1.18.26/install)"
 ENV PATH="/root/.local/share/solana/install/active_release/bin:$PATH"
 
-RUN cargo install --git https://github.com/coral-xyz/anchor avm --force
-RUN avm install 0.30.1 && avm use 0.30.1
+# Install Anchor CLI
+RUN cargo install --git https://github.com/coral-xyz/anchor --tag v0.30.1 anchor-cli
 
 WORKDIR /app
