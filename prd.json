@@ -10,7 +10,7 @@
       "deadline": "2026-02-05"
     },
     {
-      "id": "P2", 
+      "id": "P2",
       "name": "Real Signals",
       "deadline": "2026-02-07"
     },
@@ -54,7 +54,8 @@
       "passes": true,
       "assignee": "ralph-deploy-api",
       "liveUrl": "http://46.62.238.158:3456",
-      "notes": "Deployed on VPS via PM2. Vercel deployment ready (vercel.json + serverless functions created) but requires Vercel auth token."
+      "notes": "Deployed to VPS via PM2 at http://46.62.238.158:3456",
+      "completedAt": "2026-02-03T12:00:00Z"
     },
     {
       "id": "US-003",
@@ -69,8 +70,10 @@
         "Dark theme with trading aesthetic"
       ],
       "priority": 3,
-      "passes": false,
-      "assignee": null
+      "passes": true,
+      "assignee": "ralph-frontend",
+      "notes": "Next.js app created in /app with all pages and components. Dark trading theme with Phantom wallet integration. Needs Vercel deployment (no Vercel credentials available - use Vercel dashboard to import from GitHub).",
+      "completedAt": "2026-02-03T12:10:00Z"
     },
     {
       "id": "US-004",

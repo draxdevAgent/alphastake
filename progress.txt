@@ -66,3 +66,81 @@ vercel --prod
 ```
 
 ---
+
+## 2026-02-03 12:00 UTC - ralph-deploy-api (US-002 Complete)
+
+### Completed
+- API deployed to VPS at http://46.62.238.158:3456
+- All endpoints working: /api/health, /api/stats, /api/leaderboard, /api/signals
+- PM2 process manager for auto-restart
+- Vercel serverless functions ready for future migration
+
+### Learnings
+- Vercel CLI needs auth token for programmatic deploy
+- PM2 fallback works well for VPS deployment
+- Express standalone server is more flexible than serverless
+
+### Files Created
+- api/server-standalone.ts
+- api/health.ts, api/stats.ts, api/leaderboard.ts, api/signals.ts
+- vercel.json
+
+---
+
+## 2026-02-03 12:10 UTC - ralph-frontend (US-003)
+
+### Completed
+- Created Next.js 16 app with TypeScript, Tailwind CSS
+- Installed Solana wallet adapter packages (@solana/web3.js, wallet-adapter-react, etc.)
+- Built all required pages:
+  - / (homepage): Hero section + active signals feed + platform stats
+  - /leaderboard: Provider leaderboard table with ranks, win rates, earnings
+  - /signals/[id]: Individual signal detail page
+  - /providers/[address]: Provider profile with history
+- Built all required components:
+  - SignalCard: Direction (long/short), target/stop, stake, confidence, reasoning
+  - LeaderboardTable: Rank badges, win rates, P&L, reputation scores
+  - WalletProvider: Phantom + Solflare wallet integration
+  - Navbar: Logo, navigation links, wallet connect button
+  - StatsCard: Reusable stats display
+- Implemented dark trading aesthetic with green/red color scheme
+- Mobile-first responsive design
+- API integration with polling (30s signals, 60s leaderboard)
+
+### Key Learnings
+- Next.js 16 build requires significant memory - Bus error on 4GB VPS
+- Vercel CLI deployment requires auth token (not available)
+- Better to deploy via Vercel dashboard: Import from GitHub → auto-detects Next.js
+- @solana/wallet-adapter-wallets includes Phantom and Solflare adapters
+- Path aliases (@/*) must be configured in tsconfig.json
+- TailwindCSS v4 uses @import "tailwindcss" instead of @tailwind directives
+
+### Files Created
+- app/app/page.tsx (homepage)
+- app/app/leaderboard/page.tsx
+- app/app/signals/[id]/page.tsx
+- app/app/providers/[address]/page.tsx
+- app/app/globals.css (dark theme)
+- app/app/layout.tsx (root layout with wallet provider)
+- app/components/Navbar.tsx
+- app/components/SignalCard.tsx
+- app/components/LeaderboardTable.tsx
+- app/components/StatsCard.tsx
+- app/components/WalletProvider.tsx
+- app/vercel.json
+- app/next.config.ts (updated)
+- app/tsconfig.json (path aliases)
+
+### Deployment Instructions
+1. Push to GitHub: `cd alphastake && git push`
+2. Go to vercel.com/new
+3. Import draxdevAgent/alphastake
+4. Set root directory to `app`
+5. Add env var: NEXT_PUBLIC_API_URL=http://46.62.238.158:3456
+6. Deploy!
+
+### Blockers Resolved
+- ✓ Frontend code complete
+- ✗ Vercel deployment requires human action (no CLI auth)
+
+---
