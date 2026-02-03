@@ -1,0 +1,192 @@
+{
+  "project": "AlphaStake Hackathon",
+  "deadline": "2026-02-12T17:00:00Z",
+  "goal": "Win Colosseum Agent Hackathon ($100k prizes)",
+  "branchName": "main",
+  "phases": [
+    {
+      "id": "P1",
+      "name": "Live Demo",
+      "deadline": "2026-02-05"
+    },
+    {
+      "id": "P2", 
+      "name": "Real Signals",
+      "deadline": "2026-02-07"
+    },
+    {
+      "id": "P3",
+      "name": "Growth",
+      "deadline": "2026-02-10"
+    },
+    {
+      "id": "P4",
+      "name": "Submit",
+      "deadline": "2026-02-12"
+    }
+  ],
+  "userStories": [
+    {
+      "id": "US-001",
+      "phase": "P1",
+      "title": "Deploy Anchor contract to devnet",
+      "description": "Build and deploy the AlphaStake Anchor program to Solana devnet. Update program ID in all files.",
+      "acceptanceCriteria": [
+        "Program deploys successfully to devnet",
+        "Program ID updated in Anchor.toml, lib.rs, SDK",
+        "Can call initialize instruction"
+      ],
+      "priority": 1,
+      "passes": false,
+      "assignee": null
+    },
+    {
+      "id": "US-002",
+      "phase": "P1",
+      "title": "Deploy API to Vercel",
+      "description": "Deploy the REST API to Vercel or Railway. Configure environment variables for devnet RPC.",
+      "acceptanceCriteria": [
+        "API accessible at alphastake.vercel.app",
+        "/api/health returns 200",
+        "/api/stats returns valid data"
+      ],
+      "priority": 2,
+      "passes": true,
+      "assignee": "ralph-deploy-api",
+      "liveUrl": "http://46.62.238.158:3456",
+      "notes": "Deployed on VPS via PM2. Vercel deployment ready (vercel.json + serverless functions created) but requires Vercel auth token."
+    },
+    {
+      "id": "US-003",
+      "phase": "P1",
+      "title": "Build frontend dashboard",
+      "description": "Create Next.js frontend with: Leaderboard, Active Signals, Provider Profiles, Wallet Connect",
+      "acceptanceCriteria": [
+        "Homepage shows active signals",
+        "Leaderboard page with top providers",
+        "Wallet connect with Phantom",
+        "Responsive design (mobile-friendly)",
+        "Dark theme with trading aesthetic"
+      ],
+      "priority": 3,
+      "passes": false,
+      "assignee": null
+    },
+    {
+      "id": "US-004",
+      "phase": "P1",
+      "title": "End-to-end test flow",
+      "description": "Test complete flow: register provider, create signal with stake, subscribe, resolve, claim",
+      "acceptanceCriteria": [
+        "Can register as provider on devnet",
+        "Can create signal with 0.01 SOL stake",
+        "Can subscribe to signal",
+        "Resolution updates signal state correctly"
+      ],
+      "priority": 4,
+      "passes": false,
+      "assignee": null
+    },
+    {
+      "id": "US-005",
+      "phase": "P2",
+      "title": "Integrate price oracle",
+      "description": "Add Jupiter or Pyth price feeds for automatic signal resolution based on real prices",
+      "acceptanceCriteria": [
+        "Can fetch current price for any SPL token",
+        "Resolution uses real price data",
+        "Handles edge cases (delisted tokens, no liquidity)"
+      ],
+      "priority": 5,
+      "passes": false,
+      "assignee": null
+    },
+    {
+      "id": "US-006",
+      "phase": "P2",
+      "title": "Build resolution keeper",
+      "description": "Automated service that checks signals and resolves them when target/stop is hit or time expires",
+      "acceptanceCriteria": [
+        "Runs every 5 minutes",
+        "Identifies resolvable signals",
+        "Calls resolve_signal with correct price",
+        "Logs all resolutions"
+      ],
+      "priority": 6,
+      "passes": false,
+      "assignee": null
+    },
+    {
+      "id": "US-007",
+      "phase": "P2",
+      "title": "Publish real trading signals",
+      "description": "Use our trading analysis skills to publish 3-5 real signals per day with actual SOL stake",
+      "acceptanceCriteria": [
+        "Minimum 3 signals published",
+        "Each signal has reasoning based on real analysis",
+        "Track and report results daily"
+      ],
+      "priority": 7,
+      "passes": false,
+      "assignee": null
+    },
+    {
+      "id": "US-008",
+      "phase": "P3",
+      "title": "Forum engagement campaign",
+      "description": "Daily forum posts with signal results, comment on other projects, offer integrations",
+      "acceptanceCriteria": [
+        "Daily progress update post",
+        "Comment on 5+ other projects with genuine feedback",
+        "Respond to all comments on our posts"
+      ],
+      "priority": 8,
+      "passes": false,
+      "assignee": null
+    },
+    {
+      "id": "US-009",
+      "phase": "P3",
+      "title": "Integration partnerships",
+      "description": "Reach out to compatible projects (trading bots, portfolio managers) for integration",
+      "acceptanceCriteria": [
+        "Contact 5+ projects about integration",
+        "At least 1 confirmed integration partner",
+        "Integration documented in skill.md"
+      ],
+      "priority": 9,
+      "passes": false,
+      "assignee": null
+    },
+    {
+      "id": "US-010",
+      "phase": "P3",
+      "title": "Create demo video",
+      "description": "Record walkthrough video showing the full product: signals, staking, resolution, leaderboard",
+      "acceptanceCriteria": [
+        "2-3 minute video",
+        "Shows real transactions on devnet",
+        "Explains the value proposition clearly",
+        "Uploaded and linked in project"
+      ],
+      "priority": 10,
+      "passes": false,
+      "assignee": null
+    },
+    {
+      "id": "US-011",
+      "phase": "P4",
+      "title": "Final polish and submit",
+      "description": "Bug fixes, documentation updates, submit project for judging",
+      "acceptanceCriteria": [
+        "All critical bugs fixed",
+        "README and skill.md up to date",
+        "Project submitted on Colosseum",
+        "Final vote request post"
+      ],
+      "priority": 11,
+      "passes": false,
+      "assignee": null
+    }
+  ]
+}

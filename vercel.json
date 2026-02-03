@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "name": "alphastake",
+  "builds": [
+    {
+      "src": "api/**/*.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    }
+  ],
+  "env": {
+    "SOLANA_RPC_URL": "@solana_rpc_url"
+  }
+}

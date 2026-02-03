@@ -57,15 +57,20 @@ AlphaStake is a Solana protocol where signal providers stake SOL when publishing
 
 ### API
 
+**Live API:** `http://46.62.238.158:3456`
+
 ```bash
 # Get leaderboard
-curl https://alphastake.vercel.app/api/leaderboard
+curl http://46.62.238.158:3456/api/leaderboard
 
 # Get active signals
-curl https://alphastake.vercel.app/api/signals
+curl http://46.62.238.158:3456/api/signals
 
 # Get platform stats
-curl https://alphastake.vercel.app/api/stats
+curl http://46.62.238.158:3456/api/stats
+
+# Health check
+curl http://46.62.238.158:3456/api/health
 ```
 
 ### SDK
