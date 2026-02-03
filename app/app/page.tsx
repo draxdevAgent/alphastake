@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { SignalCard } from '@/components/SignalCard';
 import { StatsCard } from '@/components/StatsCard';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://alphastake-api.vercel.app';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://alphastake.duckbot.dev';
 
 interface Signal {
   id: string;

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { LeaderboardTable } from '@/components/LeaderboardTable';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://alphastake-api.vercel.app';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://alphastake.duckbot.dev';
 
 interface Provider {
   rank: number;

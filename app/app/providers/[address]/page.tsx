@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { SignalCard } from '@/components/SignalCard';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://alphastake-api.vercel.app';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://alphastake.duckbot.dev';
 
 interface Provider {
   authority: string;
