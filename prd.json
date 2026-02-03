@@ -53,8 +53,8 @@
       "priority": 2,
       "passes": true,
       "assignee": "ralph-deploy-api",
-      "liveUrl": "http://46.62.238.158:3456",
-      "notes": "Deployed to VPS via PM2 at http://46.62.238.158:3456",
+      "liveUrl": "https://alphastake.duckbot.dev",
+      "notes": "Deployed to VPS via PM2 at https://alphastake.duckbot.dev",
       "completedAt": "2026-02-03T12:00:00Z"
     },
     {

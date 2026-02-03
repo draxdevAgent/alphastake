@@ -1,0 +1,37 @@
+services:
+  alphastake-api:
+    build: .
+    container_name: alphastake-api
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - SOLANA_RPC_URL=https://api.devnet.solana.com
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.alphastake.rule=Host(`alphastake.duckbot.dev`)"
+      - "traefik.http.routers.alphastake.entrypoints=websecure"
+      - "traefik.http.routers.alphastake.tls.certresolver=letsencrypt"
+      - "traefik.http.services.alphastake.loadbalancer.server.port=3456"
+
+  alphastake-frontend:
+    image: python:3.11-alpine
+    container_name: alphastake-frontend
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./static:/app:ro
+    command: python -m http.server 3457
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.alphastake-app.rule=Host(`app.alphastake.duckbot.dev`)"
+      - "traefik.http.routers.alphastake-app.entrypoints=websecure"
+      - "traefik.http.routers.alphastake-app.tls.certresolver=letsencrypt"
+      - "traefik.http.services.alphastake-app.loadbalancer.server.port=3457"
+
+networks:
+  traefik:
+    external: true

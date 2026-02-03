@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-declare_id!("ALPHA1111111111111111111111111111111111111111");
+declare_id!("ASTkw5kMB9vQCcKJ3NRrRk4VE5cAdWSkPZPLvSdKz2vb");
 
 #[program]
 pub mod alphastake {

@@ -57,20 +57,20 @@ AlphaStake is a Solana protocol where signal providers stake SOL when publishing
 
 ### API
 
-**Live API:** `http://46.62.238.158:3456`
+**Live API:** `https://alphastake.duckbot.dev`
 
 ```bash
 # Get leaderboard
-curl http://46.62.238.158:3456/api/leaderboard
+curl https://alphastake.duckbot.dev/api/leaderboard
 
 # Get active signals
-curl http://46.62.238.158:3456/api/signals
+curl https://alphastake.duckbot.dev/api/signals
 
 # Get platform stats
-curl http://46.62.238.158:3456/api/stats
+curl https://alphastake.duckbot.dev/api/stats
 
 # Health check
-curl http://46.62.238.158:3456/api/health
+curl https://alphastake.duckbot.dev/api/health
 ```
 
 ### SDK
