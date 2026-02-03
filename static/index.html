@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlphaStake - Verifiable Trading Signals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #0a0a0f; }
+        .gradient-text { background: linear-gradient(90deg, #10b981, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="text-white min-h-screen">
+    <!-- Navbar -->
+    <nav class="border-b border-gray-800 px-6 py-4">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold gradient-text">AlphaStake</h1>
+            <div class="flex gap-6">
+                <a href="#signals" class="hover:text-green-400">Signals</a>
+                <a href="#leaderboard" class="hover:text-green-400">Leaderboard</a>
+                <a href="https://github.com/draxdevAgent/alphastake" class="hover:text-green-400">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="py-20 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-5xl font-bold mb-6">Verifiable Trading Signals</h2>
+            <p class="text-xl text-gray-400 mb-8">
+                Stake SOL on your calls. Hit target = earn rewards. Miss = get slashed.<br>
+                <span class="text-green-400">Trust math, not promises.</span>
+            </p>
+            <div id="stats" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
+                <!-- Stats loaded via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Active Signals -->
+    <section id="signals" class="py-16 px-6 bg-gray-900/50">
+        <div class="max-w-6xl mx-auto">
+            <h3 class="text-3xl font-bold mb-8">🔴 Active Signals</h3>
+            <div id="signals-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Signals loaded via JS -->
+                <div class="text-gray-500">Loading signals...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leaderboard -->
+    <section id="leaderboard" class="py-16 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h3 class="text-3xl font-bold mb-8">🏆 Leaderboard</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="border-b border-gray-800">
+                        <tr class="text-left text-gray-400">
+                            <th class="py-3 px-4">Rank</th>
+                            <th class="py-3 px-4">Provider</th>
+                            <th class="py-3 px-4">Win Rate</th>
+                            <th class="py-3 px-4">Signals</th>
+                            <th class="py-3 px-4">Earned</th>
+                            <th class="py-3 px-4">Reputation</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                        <tr><td colspan="6" class="py-4 text-gray-500">Loading leaderboard...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-16 px-6 bg-gray-900/50">
+        <div class="max-w-4xl mx-auto">
+            <h3 class="text-3xl font-bold mb-8 text-center">How It Works</h3>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-6">
+                    <div class="text-4xl mb-4">💰</div>
+                    <h4 class="text-xl font-bold mb-2">Stake Your Call</h4>
+                    <p class="text-gray-400">Providers stake SOL when publishing signals. Skin in the game.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="text-4xl mb-4">📈</div>
+                    <h4 class="text-xl font-bold mb-2">Track Results</h4>
+                    <p class="text-gray-400">All signals resolve on-chain. Verifiable track record.</p>
+                </div>
+                <div class="text-center p-6">
+                    <div class="text-4xl mb-4">🏆</div>
+                    <h4 class="text-xl font-bold mb-2">Earn or Lose</h4>
+                    <p class="text-gray-400">Win = stake back + fees. Lose = slashed to subscribers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-6 border-t border-gray-800 text-center text-gray-500">
+        <p>Built by <a href="https://colosseum.com/agent-hackathon/projects/alphastake" class="text-green-400 hover:underline">draxdevAI</a> for Colosseum Agent Hackathon</p>
+        <p class="mt-2">
+            <a href="https://github.com/draxdevAgent/alphastake" class="hover:text-white">GitHub</a> · 
+            <a href="https://alphastake.duckbot.dev/api/health" class="hover:text-white">API</a>
+        </p>
+    </footer>
+
+    <script>
+        const API = 'https://alphastake.duckbot.dev';
+
+        async function loadStats() {
+            try {
+                const res = await fetch(`${API}/api/stats`);
+                const data = await res.json();
+                document.getElementById('stats').innerHTML = `
+                    <div class="bg-gray-800/50 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-green-400">${data.totalProviders || 0}</div>
+                        <div class="text-gray-400">Providers</div>
+                    </div>
+                    <div class="bg-gray-800/50 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-blue-400">${data.activeSignals || 0}</div>
+                        <div class="text-gray-400">Active Signals</div>
+                    </div>
+                    <div class="bg-gray-800/50 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-yellow-400">${data.totalStakedSOL || '0'}</div>
+                        <div class="text-gray-400">SOL Staked</div>
+                    </div>
+                    <div class="bg-gray-800/50 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-purple-400">${data.averageWinRate || '0%'}</div>
+                        <div class="text-gray-400">Avg Win Rate</div>
+                    </div>
+                `;
+            } catch (e) {
+                console.error('Failed to load stats', e);
+            }
+        }
+
+        async function loadSignals() {
+            try {
+                const res = await fetch(`${API}/api/signals`);
+                const data = await res.json();
+                const grid = document.getElementById('signals-grid');
+                
+                if (!data.signals || data.signals.length === 0) {
+                    grid.innerHTML = `
+                        <div class="col-span-full text-center py-12 bg-gray-800/30 rounded-lg">
+                            <div class="text-4xl mb-4">📊</div>
+                            <p class="text-gray-400">No active signals yet.</p>
+                            <p class="text-sm text-gray-500 mt-2">Be the first to publish!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                grid.innerHTML = data.signals.map(s => `
+                    <div class="bg-gray-800/50 rounded-lg p-6 border border-gray-700">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="px-3 py-1 rounded text-sm font-bold ${s.direction === 'long' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}">
+                                ${s.direction.toUpperCase()}
+                            </span>
+                            <span class="text-gray-400 text-sm">${s.stakeAmountSOL} SOL staked</span>
+                        </div>
+                        <div class="mb-4">
+                            <div class="text-sm text-gray-400">Target</div>
+                            <div class="text-xl font-bold">${s.targetPrice}</div>
+                        </div>
+                        <div class="mb-4">
+                            <div class="text-sm text-gray-400">Confidence</div>
+                            <div class="w-full bg-gray-700 rounded-full h-2">
+                                <div class="bg-green-500 h-2 rounded-full" style="width: ${s.confidence}%"></div>
+                            </div>
+                            <div class="text-right text-sm text-gray-400">${s.confidence}%</div>
+                        </div>
+                        <p class="text-sm text-gray-400 line-clamp-2">${s.reasoning}</p>
+                    </div>
+                `).join('');
+            } catch (e) {
+                console.error('Failed to load signals', e);
+            }
+        }
+
+        async function loadLeaderboard() {
+            try {
+                const res = await fetch(`${API}/api/leaderboard`);
+                const data = await res.json();
+                const tbody = document.getElementById('leaderboard-body');
+                
+                if (!data.leaderboard || data.leaderboard.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-gray-500">No providers yet. Be the first!</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = data.leaderboard.map((p, i) => `
+                    <tr class="border-b border-gray-800 hover:bg-gray-800/30">
+                        <td class="py-4 px-4">
+                            ${i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${p.rank}`}
+                        </td>
+                        <td class="py-4 px-4 font-medium">${p.name}</td>
+                        <td class="py-4 px-4 text-green-400">${p.winRate}</td>
+                        <td class="py-4 px-4">${p.totalSignals}</td>
+                        <td class="py-4 px-4">${p.totalEarnedSOL} SOL</td>
+                        <td class="py-4 px-4">${p.reputationScore}</td>
+                    </tr>
+                `).join('');
+            } catch (e) {
+                console.error('Failed to load leaderboard', e);
+            }
+        }
+
+        // Load all data
+        loadStats();
+        loadSignals();
+        loadLeaderboard();
+
+        // Refresh every 30s
+        setInterval(loadSignals, 30000);
+        setInterval(loadStats, 60000);
+    </script>
+</body>
+</html>
